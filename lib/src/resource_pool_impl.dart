@@ -5,7 +5,7 @@ typedef ResourceFactory<RESOURCE> = Future<RESOURCE> Function();
 class ResourcePool<RESOURCE> {
   final int capacity;
   final ResourceFactory<RESOURCE> resourceFactory;
-  final int maxQueueSize;
+  final int? maxQueueSize;
 
   final Set<RESOURCE> _availableResources = {};
   final Set<RESOURCE> _busyResources = {};
@@ -22,7 +22,7 @@ class ResourcePool<RESOURCE> {
         _busyResources.add(newResource);
         return newResource;
       } else {
-        if (maxQueueSize != null && _queue.length >= maxQueueSize) {
+        if (maxQueueSize != null && _queue.length >= maxQueueSize!) {
           throw "Max queue size reached: ${_queue.length}";
         }
 
